@@ -18,7 +18,7 @@ User1 = User(name="admin", email="uddesh.jain88@gmail.com")
 session.add(User1)
 session.commit()
 
-# Menu for Rajula's Kitchen
+# Menu for Alfanzo Restaurant
 restaurant1 = Restaurant(name="Alfanzo", user_id="1")
 
 session.add(restaurant1)
@@ -50,7 +50,7 @@ session.add(menuItem3)
 session.commit()
 
 
-# Menu for Biryani Pot
+# Menu for Buzztime Restaurant
 restaurant2 = Restaurant(name="Buzztime")
 
 session.add(restaurant2)
