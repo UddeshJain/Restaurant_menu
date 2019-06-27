@@ -7,21 +7,15 @@
 <body>
     {% include "nav.html" %}
     {% include "flash.html" %}
-
     <h1>New Restaurant</h1>
     <div class="pane">
         <form action="#" method='post'>
-
-
             <p>Name:</p>
             <input type='text' size='30' name='name'>
-
-
             <input type='submit' value='Create'>
-
         </form>
+        <a href='{{url_for('showRestaurants')}}'> Cancel </a>
     </div>
-
 </body>
 
 </html>

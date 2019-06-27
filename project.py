@@ -18,7 +18,8 @@ CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_i
 APPLICATION_NAME = "Restaurant Menu Application"
 
 # Create session and connect to DB
-engine = create_engine('sqlite:///restaurantmenu.db')
+engine = create_engine('sqlite:///restaurantmenu.db',
+                       connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
@@ -201,7 +202,7 @@ def restaurantsJSON():
     return jsonify(restaurants=[r.serialize for r in restaurants])
 
 @app.route('/')
-@app.route('/restaurant/')
+@app.route('/restaurants/')
 def showRestaurants():
     restaurants = session.query(Restaurant).all()
     return render_template('restaurants.html', restaurants = restaurants)
@@ -230,8 +231,8 @@ def editRestaurant(restaurant_id):
         Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    if editedRestaurant.user_id != login_session['user_id']:
-        return "<script>{alert('Unauthorized');}</script>"
+    # if editedRestaurant.user_id != login_session['user_id']:
+    #     return "<script>{alert('Unauthorized');}</script>"
     if request.method == 'POST':
         if request.form['name']:
             editedRestaurant.name = request.form['name']
@@ -250,8 +251,8 @@ def deleteRestaurant(restaurant_id):
         Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
-    if restaurantToDelete.user_id != login_session['user_id']:
-        return "<script>{alert('Unauthorized');}</script>"
+    # if restaurantToDelete.user_id != login_session['user_id']:
+    #     return "<script>{alert('Unauthorized');}</script>"
     if request.method == 'POST':
         session.delete(restaurantToDelete)
         flash('%s Successfully Deleted' % restaurantToDelete.name)
@@ -279,8 +280,6 @@ def restaurantMenu(restaurant_id):
 def newMenuItem(restaurant_id):
     if 'username' not in login_session:
         return redirect('/login')
-
-        session = connect_to_database()
 
     if request.method == 'POST':
         newItem = MenuItem(name=request.form['name'],

@@ -6,7 +6,7 @@
     <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
-    <script> function start() { gapi.load('auth2', function () { auth2 = gapi.auth2.init({ client_id: '212221718739-i4udp0ibk5ipo2l4dpmmnfodqj5607qa.apps.googleusercontent.com' }); }); } </script>
+    <script> function start() { gapi.load('auth2', function () { auth2 = gapi.auth2.init({ client_id: '156191574514-islfrfq0o1u9p1dbn04bce69cgljs9qn.apps.googleusercontent.com' }); }); } </script>
     <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
 </head>
 
@@ -31,7 +31,7 @@
                             if (result) {
                                 $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
                                 setTimeout(function () {
-                                    window.location.href = "/restaurants";
+                                    window.location.href = "/";
                                 }, 4000);
                             } else if (authResult['error']) {
                                 console.log('There was an error: ' + authResult['error']);

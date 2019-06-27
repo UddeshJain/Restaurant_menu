@@ -1,16 +1,13 @@
 body{ 
     font-family: Tahoma; 
-    background-color: #333333; 
-    background-image: url('bg.jpg') ; 
-    background-position: center;
-    background-size: cover
+    background-color: #4baf75; 
 }
-h1{
+/* h1{
     font-family: Tahoma;
     color: #7B895B 
-}
+} */
 h1, h2, h3, h4{ 
-    color: #FA8072;  
+    color: rgb(25, 118, 180);  
     font-weight: bold;
 }
 h2{ 
@@ -34,14 +31,16 @@ a{
 
 .pane {
     position:absolute;  
-    border: 2px solid; 
+    left: 40%;
+    top: 15%;
+    border: 5px solid rgb(197, 194, 194); 
     opacity: 0.8;
     filter: alpha(opacity=60);
-    border-radius: 25px; 
+    border-radius: 5px; 
     padding: 20px; 
     padding-top: 5px; 
-    margin: 5px; 
-    border-color: #000000; 
+    margin: 2px; 
+    border-color: #b6b3b3; 
     background-color: #ffffff; 
 }
 .header{
@@ -51,15 +50,14 @@ a{
 .name {
     float: left;
     width:50%;
-    /* display: inline-block;  */
 }
-/* .description {} */
+
 .price {
     text-align: right; 
     width:50%; 
     float: right; 
 }
-/* .editdeletepane{} */
+
 .flash{
     background: #cee5F5; 
 }
