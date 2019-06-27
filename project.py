@@ -33,7 +33,7 @@ session = DBSession()
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                    for x in xrange(32))
+                    for x in range(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
@@ -47,7 +47,8 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
     # Obtain authorization code
-    code = request.data
+    request.get_data()
+    code = request.data.decode('utf-8')
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
@@ -64,6 +65,8 @@ def gconnect():
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
            % access_token)
     h = httplib2.Http()
+    response = h.request(url, 'GET')[1]
+    str_response = response.decode('utf-8')
     result = json.loads(h.request(url, 'GET')[1])
     # If there was an error in the access token
     if result.get('error') is not None:
@@ -145,8 +148,11 @@ def getUserInfo(user_id):
 
 
 def getUserID(email):
-    user = session.query(User).filter_by(email=email).one()
-    return user.id
+    user = session.query(User).filter_by(email=email).first()
+    if not user:
+        return None
+    else:
+        return user.id
 
 
 @app.route('/gdisconnect')
@@ -214,8 +220,10 @@ def newRestaurant():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newRestaurant = Restaurant(name=request.form['name'])
+        newRestaurant = Restaurant(
+            name=request.form['name'], user_id=login_session['user_id'])
         session.add(newRestaurant)
+        flash('New Restaurant %s Successfully Created' % newRestaurant.name)
         session.commit()
         return redirect(url_for('showRestaurants'))
     else:
@@ -229,6 +237,9 @@ def editRestaurant(restaurant_id):
         Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    if editedRestaurant.user_id != login_session['user_id']:
+        flash('You are not authorized')
+        return redirect(url_for('showRestaurants'))
     if request.method == 'POST':
         if request.form['name']:
             editedRestaurant.name = request.form['name']
@@ -246,6 +257,9 @@ def deleteRestaurant(restaurant_id):
         Restaurant).filter_by(id=restaurant_id).one()
     if 'username' not in login_session:
         return redirect('/login')
+    if restaurantToDelete.user_id != login_session['user_id']:
+        flash('You are not authorized')
+        return redirect(url_for('showRestaurants'))
     if request.method == 'POST':
         session.delete(restaurantToDelete)
         flash('%s Successfully Deleted' % restaurantToDelete.name)
@@ -272,7 +286,10 @@ def restaurantMenu(restaurant_id):
 def newMenuItem(restaurant_id):
     if 'username' not in login_session:
         return redirect('/login')
-
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    if login_session['user_id'] != restaurant.user_id:
+        flash('You are not authorized')
+        return redirect(url_for('showRestaurants'))
     if request.method == 'POST':
         newItem = MenuItem(name=request.form['name'],
                            description=request.form['description'],
@@ -294,6 +311,10 @@ def editMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
         return redirect('/login')
     editedItem = session.query(MenuItem).filter_by(id=menu_id).one()
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    if login_session['user_id'] != restaurant.user_id:
+        flash('You are not authorized')
+        return redirect(url_for('showRestaurants'))
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
@@ -317,7 +338,11 @@ def editMenuItem(restaurant_id, menu_id):
 def deleteMenuItem(restaurant_id, menu_id):
     if 'username' not in login_session:
         return redirect('/login')
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
     itemToDelete = session.query(MenuItem).filter_by(id=menu_id).one()
+    if login_session['user_id'] != restaurant.user_id:
+        flash('You are not authorized')
+        return redirect(url_for('showRestaurants'))
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()

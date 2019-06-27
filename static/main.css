@@ -59,5 +59,22 @@ a{
 }
 
 .flash{
-    background: #cee5F5; 
+    position: relative;
+    text-align: center;
+    background: rgb(206, 51, 147); 
+    list-style: none;
+    height: 40px;
+}
+
+button {
+    position: relative;
+    left: 40vw;
+    color: #ffffff;
+    background: #bd3781;
+    width: 240px;
+    height: 40px;
+}
+
+button:hover {
+    background: rgb(99, 190, 46);
 }
