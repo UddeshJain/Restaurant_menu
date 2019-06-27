@@ -1,23 +1,21 @@
 body{ 
     font-family: Tahoma; 
-    background-color: #4baf75; 
+    background-color: #37bd95; 
 }
-/* h1{
-    font-family: Tahoma;
-    color: #7B895B 
-} */
+
 h1, h2, h3, h4{ 
-    color: rgb(25, 118, 180);  
+    color: rgb(180, 45, 128);  
     font-weight: bold;
 }
+
 h2{ 
     font-family: 'Georgia', serif; 
     margin: 0; 
 }
+
 h2{ 
     font-size: 1.2em; 
 }
-
 
 p{ 
     color: #BEA42E;
@@ -34,7 +32,7 @@ a{
     left: 40%;
     top: 15%;
     border: 5px solid rgb(197, 194, 194); 
-    opacity: 0.8;
+    opacity: 0.95;
     filter: alpha(opacity=60);
     border-radius: 5px; 
     padding: 20px; 
@@ -43,10 +41,12 @@ a{
     border-color: #b6b3b3; 
     background-color: #ffffff; 
 }
+
 .header{
     left:50%; 
     text-align: center;
 }
+
 .name {
     float: left;
     width:50%;
