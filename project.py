@@ -145,11 +145,8 @@ def getUserInfo(user_id):
 
 
 def getUserID(email):
-    # try:
     user = session.query(User).filter_by(email=email).one()
     return user.id
-    # except:
-    #     return
 
 
 @app.route('/gdisconnect')
@@ -203,6 +200,7 @@ def restaurantsJSON():
     return jsonify(restaurants=[r.serialize for r in restaurants])
 
 
+# List of all restaurant
 @app.route('/')
 @app.route('/restaurants/')
 def showRestaurants():
