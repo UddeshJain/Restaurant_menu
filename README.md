@@ -9,10 +9,15 @@ Item Catalog provides a list of items within a variety of categories as well as 
 ## Instructions
 
 1 Download and install [Python](https://www.python.org/)
+
 2 Download and install [virtual box](https://www.virtualbox.org/)
+
 3 Download and install [vagrant](https://www.vagrantup.com/)
+
 4 Clone this repository
+
 5 Place the Item Catalog folder in your Vagrant directory
+
 6 Launch Vagrant
 
 ```
